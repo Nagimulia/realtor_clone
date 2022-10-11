@@ -7,12 +7,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { EffectFade, Autoplay, Navigation, Pagination } from 'swiper';
 import 'swiper/css/bundle';
 import { FaShare, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair } from 'react-icons/fa';
+import { getAuth } from 'firebase/auth';
+import Contact from '../components/Contact';
 
 const Listing = () => {
+  const auth = getAuth();
   const params = useParams();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
+  const [contactLandlord, setContactLandlord] = useState(false);
 
   SwiperCore.use([Autoplay, Navigation, Pagination]);
   useEffect(() => {
@@ -92,27 +96,37 @@ const Listing = () => {
             </p>
           </div>
           <p className="mb-3 mt-3 ">
-            <span className='font font-semibold'>Description - </span>
+            <span className="font font-semibold">Description - </span>
             {listing.description}
           </p>
-          <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold">
+          <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold mb-6">
             <li className="flex items-center whitespace-nowrap">
-              <FaBed className="text-lg mr-1"/>
+              <FaBed className="text-lg mr-1" />
               {+listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : '1 Bed'}
             </li>
             <li className="flex items-center whitespace-nowrap">
-              <FaBath className="text-lg mr-1"/>
+              <FaBath className="text-lg mr-1" />
               {+listing.bathrooms > 1 ? `${listing.bathrooms} Baths` : '1 Bath'}
             </li>
             <li className="flex items-center whitespace-nowrap">
-              <FaParking className="text-lg mr-1"/>
+              <FaParking className="text-lg mr-1" />
               {listing.parkings ? 'Parking Spot' : 'No Parking'}
             </li>
             <li className="flex items-center whitespace-nowrap">
-              <FaChair className="text-lg mr-1"/>
+              <FaChair className="text-lg mr-1" />
               {listing.furnished ? 'Furnished' : 'Not Furnished'}
             </li>
           </ul>
+          {listing.userRef !== auth.currentUser?.uid && !contactLandlord && (
+            <div className="mt-6">
+              <button
+                onClick={() => setContactLandlord(true)}
+                className="px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out">
+                Contact Landlord
+              </button>
+            </div>
+          )}
+          {contactLandlord && <Contact userRef={listing.userRef} listing={listing} />}
         </div>
 
         <div className="w-full h-[200px] lg-[400px]z-10 overflow-x-hidden"></div>

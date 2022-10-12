@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Slider from '../components/Slider';
 import { db } from '../firebase';
 import ListingItem from '../components/ListingItem';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [offerListings, setOfferListings] = useState(null);
@@ -84,7 +85,9 @@ const [saleListings, setSaleListings] = useState(null);
         });
         setSaleListings(listings);
       } catch (error) {
-        console.log(error);
+        toast.error(
+          'Could not fetch listing'
+        )
       }
     }
     fetchListings();
@@ -108,7 +111,7 @@ const [saleListings, setSaleListings] = useState(null);
             </ul>
           </div>
         )}
-        
+
          {rentListings && rentListings.length > 0 && (
           <div className="m-2 mb-6">
             <h2 className="px-3 text-2xl mt-2 font-semibold">Places for Rent</h2>

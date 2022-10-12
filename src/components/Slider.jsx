@@ -40,26 +40,26 @@ const Slider = () => {
     listings && (
       <>
         <Swiper
-        slidesPerView={1}
-        navigation
-        pagination={{ type: 'progressbar'}}
-        effect='fade'
-        modules={[EffectFade]}
-        autoplay={{delay: 3000}}
-        >
-          {listings.map(({data, id}) => (
-            <SwiperSlide
-            key={id}
-            onClick={() => navigate(`/category/${data.type}/${id}`)}>
+          slidesPerView={1}
+          navigation
+          pagination={{ type: 'progressbar' }}
+          effect="fade"
+          modules={[EffectFade]}
+          autoplay={{ delay: 3000 }}>
+          {listings.map(({ data, id }) => (
+            <SwiperSlide key={id} onClick={() => navigate(`/category/${data.type}/${id}`)}>
               <div
-              style={{
-                background: `url(${data.imgUrls[0]}) center, no-repeat`,
-                backgroundSize: "cover",
-              }}
-              className="relative w-full h-[300px] overflow-hidden">
-                <p className="text-[#f1faee] absolute left-1 top-3 font-medium max-w-[90%] bg-[#457b9d] shadow-lg opacity-90 p-2 rounded-br-3xl">{data.name}</p>
-                <p className="text-[#f1faee] absolute left-1 bottom-1 font-semibold max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded-tr-3xl">${data.discountedPrice ?? data.regularPrice}
-                {data.type === 'rent' && ' / month'}
+                style={{
+                  background: `url(${data.imgUrls[0]}) center, no-repeat`,
+                  backgroundSize: 'cover',
+                }}
+                className="relative w-full h-[300px] overflow-hidden">
+                <p className="text-[#f1faee] absolute left-1 top-3 font-medium max-w-[90%] bg-[#457b9d] shadow-lg opacity-90 p-2 rounded-br-3xl">
+                  {data.name}
+                </p>
+                <p className="text-[#f1faee] absolute left-1 bottom-1 font-semibold max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded-tr-3xl">
+                  ${data.discountedPrice ?? data.regularPrice}
+                  {data.type === 'rent' && ' / month'}
                 </p>
               </div>
             </SwiperSlide>
